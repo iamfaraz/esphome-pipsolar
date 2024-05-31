@@ -281,9 +281,6 @@ void Pipsolar::loop() {
         if (this->switch_on_) {
           this->switch_on_->publish_state(value_switch_on_);
         }
-        if (this->dustproof_installed_) {
-          this->dustproof_installed_->publish_state(value_dustproof_installed_);
-        }
         this->state_ = STATE_IDLE;
         break;
       case POLLING_QMOD:
