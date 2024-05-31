@@ -18,6 +18,7 @@ CONF_SCC_CHARGING_STATUS = "scc_charging_status"
 CONF_AC_CHARGING_STATUS = "ac_charging_status"
 CONF_CHARGING_TO_FLOATING_MODE = "charging_to_floating_mode"
 CONF_SWITCH_ON = "switch_on"
+CONF_TEST_SEN = "test_sen"
 CONF_SILENCE_BUZZER_OPEN_BUZZER = "silence_buzzer_open_buzzer"
 CONF_OVERLOAD_BYPASS_FUNCTION = "overload_bypass_function"
 CONF_LCD_ESCAPE_TO_DEFAULT = "lcd_escape_to_default"
@@ -84,6 +85,7 @@ TYPES = [
     CONF_AC_CHARGING_STATUS,
     CONF_CHARGING_TO_FLOATING_MODE,
     CONF_SWITCH_ON,
+    CONF_TEST_SEN,
     CONF_SILENCE_BUZZER_OPEN_BUZZER,
     CONF_OVERLOAD_BYPASS_FUNCTION,
     CONF_LCD_ESCAPE_TO_DEFAULT,

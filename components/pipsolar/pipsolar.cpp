@@ -281,6 +281,9 @@ void Pipsolar::loop() {
         if (this->switch_on_) {
           this->switch_on_->publish_state(value_switch_on_);
         }
+        if (this->test_sen_) {
+          this->test_sen_->publish_state(value_test_sen_);
+        }
         this->state_ = STATE_IDLE;
         break;
       case POLLING_QMOD:
@@ -488,7 +491,7 @@ void Pipsolar::loop() {
         ESP_LOGD(TAG, "Decode QPIGS");
         sscanf(                                                                                             // NOLINT
             tmp,                                                                                            // NOLINT
-            "(%f %f %f %f %d %d %d %d %f %d %d %d %f %f %f %d %1d%1d%1d%1d%1d%1d%1d%1d %d %d %d",           // NOLINT
+            "(%f %f %f %f %d %d %d %d %f %d %d %d %f %f %f %d %1d%1d%1d%1d%1d%1d%1d%1d %d %d %d %d",        // NOLINT
             &value_grid_voltage_, &value_grid_frequency_, &value_ac_output_voltage_,                        // NOLINT
             &value_ac_output_frequency_,                                                                    // NOLINT
             &value_ac_output_apparent_power_, &value_ac_output_active_power_, &value_output_load_percent_,  // NOLINT
@@ -500,7 +503,7 @@ void Pipsolar::loop() {
             &value_battery_voltage_to_steady_while_charging_, &value_charging_status_,                      // NOLINT
             &value_scc_charging_status_, &value_ac_charging_status_,                                        // NOLINT
             &value_battery_voltage_offset_for_fans_on_, &value_eeprom_version_, &value_pv_charging_power_,  // NOLINT
-            &value_charging_to_floating_mode_, &value_switch_on_);                                          // NOLINT
+            &value_charging_to_floating_mode_, &value_switch_on_, &value_test_sen_);                        // NOLINT
         if (this->last_qpigs_) {
           this->last_qpigs_->publish_state(tmp);
         }
