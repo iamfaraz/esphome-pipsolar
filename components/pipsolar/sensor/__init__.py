@@ -235,12 +235,12 @@ TYPES = {
         accuracy_decimals=1,
         device_class=DEVICE_CLASS_TEMPERATURE,
     ),
-    CONF_PV1_INPUT_CURRENT: sensor.sensor_schema(
+    CONF_PV_INPUT_CURRENT: sensor.sensor_schema(
         unit_of_measurement=UNIT_AMPERE,
         accuracy_decimals=1,
         device_class=DEVICE_CLASS_CURRENT,
     ),
-    CONF_PV1_INPUT_VOLTAGE: sensor.sensor_schema(
+    CONF_PV_INPUT_VOLTAGE: sensor.sensor_schema(
         unit_of_measurement=UNIT_VOLT,
         accuracy_decimals=1,
         device_class=DEVICE_CLASS_VOLTAGE,
@@ -263,22 +263,7 @@ TYPES = {
     CONF_EEPROM_VERSION: sensor.sensor_schema(
         accuracy_decimals=1,
     ),
-    CONF_PV1_CHARGING_POWER: sensor.sensor_schema(
-        unit_of_measurement=UNIT_WATT,
-        accuracy_decimals=1,
-        device_class=DEVICE_CLASS_POWER,
-    ),
-    CONF_PV2_INPUT_CURRENT: sensor.sensor_schema(
-        unit_of_measurement=UNIT_AMPERE,
-        accuracy_decimals=1,
-        device_class=DEVICE_CLASS_CURRENT,
-    ),
-    CONF_PV2_INPUT_VOLTAGE: sensor.sensor_schema(
-        unit_of_measurement=UNIT_VOLT,
-        accuracy_decimals=1,
-        device_class=DEVICE_CLASS_VOLTAGE,
-    ),
-    CONF_PV2_CHARGING_POWER: sensor.sensor_schema(
+    CONF_PV_CHARGING_POWER: sensor.sensor_schema(
         unit_of_measurement=UNIT_WATT,
         accuracy_decimals=1,
         device_class=DEVICE_CLASS_POWER,
