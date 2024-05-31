@@ -116,6 +116,9 @@ class Pipsolar : public uart::UARTDevice, public PollingComponent {
   PIPSOLAR_SENSOR(battery_redischarge_voltage, QPIRI, float)
   PIPSOLAR_SENSOR(pv_ok_condition_for_parallel, QPIRI, int)
   PIPSOLAR_SENSOR(pv_power_balance, QPIRI, int)
+  PIPSOLAR_SENSOR(battery_cutoff_voltage, QPIRI, float)
+  PIPSOLAR_SENSOR(dual_output, QPIRI, int)
+  PIPSOLAR_SENSOR(battery_cutoff_voltage2, QPIRI, float)
 
   // QMOD values
   PIPSOLAR_VALUED_TEXT_SENSOR(device_mode, QMOD, char)
@@ -192,10 +195,10 @@ class Pipsolar : public uart::UARTDevice, public PollingComponent {
 
   PIPSOLAR_SELECT(output_source_priority_select, QPIRI)
   PIPSOLAR_SELECT(charger_source_priority_select, QPIRI)
-  
+
   PIPSOLAR_SELECT(current_max_ac_charging_current_select, QPIRI)
   PIPSOLAR_SELECT(current_max_charging_current_select, QPIRI)
-  
+
   PIPSOLAR_VALUED_SELECT(charging_discharging_control_select, QBATCD, std::string)
 
   void switch_command(const std::string &command);
