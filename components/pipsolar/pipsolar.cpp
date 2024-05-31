@@ -479,7 +479,7 @@ void Pipsolar::loop() {
                &value_pv_power_balance_, &value_battery_cutoff_voltage_, &value_dual_output_,
                &value_battery_cutoff_voltage2_);  // NOLINT
         if (this->last_qpiri_) {
-          ` this->last_qpiri_->publish_state(tmp);
+          this->last_qpiri_->publish_state(tmp);
         }
         /*
         this->current_max_ac_charging_current_select_ = value_current_max_ac_charging_current_;
