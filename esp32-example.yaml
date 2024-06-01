@@ -1,102 +1,128 @@
-# Warning:
-#
-# If you configure a lot of the possible sensors etc. it could be that you run
-# out of memory (on esp8266). If you configure nearly all sensors etc. you run
-# in a stack-size issue. In this case you have to increase stack size!
-#
-#  https://github.com/esphome/issues/issues/855
-
 substitutions:
-  name: pipsolar
+  name: fronus
+  friendly_name: "Fronus Inverter"
+  device_description: "Monitor and control a Fronus inverter via RS232"
+  tx_pin: GPIO16
+  rx_pin: GPIO17
 
 esphome:
   name: ${name}
-  platform: ESP32
-  board: esp-wrover-kit
+
+esp32:
+  board: upesy_wroom
+  framework:
+    type: esp-idf
+    version: recommended
 
 external_components:
-  - source: github://syssi/esphome-pipsolar@2424mse1
+  - source: github://iamfaraz/esphome-pipsolar@2424mse1
     refresh: 0s
 
-wifi:
-  ssid: !secret wifi_ssid
-  password: !secret wifi_password
+api:
+  reboot_timeout: 0s
+
+time:
+  platform: sntp
+
+web_server:
+
+captive_portal:
 
 ota:
 
 logger:
+  # hardware_uart: UART1
   baud_rate: 0
+  level: DEBUG
 
-mqtt:
-  broker: !secret mqtt_host
-  username: !secret mqtt_username
-  password: !secret mqtt_password
-  id: mqtt_client
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  manual_ip:
+    # Set this to the IP of the ESP
+    static_ip: 192.168.1.195
+    # Set this to the IP address of the router. Often ends with .1
+    gateway: 192.168.1.1
+    # The subnet of the network. 255.255.255.0 works for most home networks.
+    subnet: 255.255.255.0
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Fronus Fallback Hotspot"
+    password: "11223344"
 
 uart:
-  - id: uart0
+  - id: uart_0
     baud_rate: 2400
-    tx_pin: GPIO1
-    rx_pin: GPIO3
+    tx_pin: ${tx_pin}
+    rx_pin: ${rx_pin}
+    # most devices use 2400 as baud_rate
+    debug:
+      direction: BOTH
+      dummy_receiver: false
+      after:
+        delimiter: "\r"
+      sequence:
+        - lambda: UARTDebug::log_string(direction, bytes);
 
 pipsolar:
-  uart_id: uart0
+  uart_id: uart_0
   id: inverter0
 
 sensor:
   - platform: pipsolar
     pipsolar_id: inverter0
     # QPIRI
-#    grid_rating_voltage:
-#      name: "${name} grid_rating_voltage"
-#    grid_rating_current:
-#      name: "${name} grid_rating_current"
-#    ac_output_rating_voltage:
-#      name: "${name} ac_output_rating_voltage"
-#    ac_output_rating_frequency:
-#      name: "${name} ac_output_rating_frequency"
-#    ac_output_rating_current:
-#      name: "${name} ac_output_rating_current"
-#    ac_output_rating_apparent_power:
-#      name: "${name} ac_output_rating_apparent_power"
-#    ac_output_rating_active_power:
-#      name: "${name} ac_output_rating_active_power"
-#    battery_rating_voltage:
-#      name: "${name} battery_rating_voltage"
-#    battery_recharge_voltage:
-#      name: "${name} battery_recharge_voltage"
-#    battery_under_voltage:
-#      name: "${name} battery_under_voltage"
-#    battery_bulk_voltage:
-#      name: "${name} battery_bulk_voltage"
-#    battery_float_voltage:
-#      name: "${name} battery_float_voltage"
-#    battery_type:
-#      name: "${name} battery_type"
-#    current_max_ac_charging_current:
-#      name: "${name} current_max_ac_charging_current"
-#    current_max_charging_current:
-#      name: "${name} current_max_charging_current"
-#    input_voltage_range:
-#      name: "${name} input_voltage_range"
-#    output_source_priority:
-#      name: "${name} output_source_priority"
-#    charger_source_priority:
-#      name: "${name} charger_source_priority"
-#    parallel_max_num:
-#      name: "${name} parallel_max_num"
-#    machine_type:
-#      name: "${name} machine_type"
-#    topology:
-#      name: "${name} topology"
-#    output_mode:
-#      name: "${name} output_mode"
-#    battery_redischarge_voltage:
-#      name: "${name} battery_redischarge_voltage"
-#    pv_ok_condition_for_parallel:
-#      name: "${name} pv_ok_condition_for_parallel"
-#    pv_power_balance:
-#      name: "${name} pv_power_balance"
+    #    grid_rating_voltage:
+    #      name: "${name} grid_rating_voltage"
+    #    grid_rating_current:
+    #      name: "${name} grid_rating_current"
+    #    ac_output_rating_voltage:
+    #      name: "${name} ac_output_rating_voltage"
+    #    ac_output_rating_frequency:
+    #      name: "${name} ac_output_rating_frequency"
+    #    ac_output_rating_current:
+    #      name: "${name} ac_output_rating_current"
+    #    ac_output_rating_apparent_power:
+    #      name: "${name} ac_output_rating_apparent_power"
+    #    ac_output_rating_active_power:
+    #      name: "${name} ac_output_rating_active_power"
+    #    battery_rating_voltage:
+    #      name: "${name} battery_rating_voltage"
+    #    battery_recharge_voltage:
+    #      name: "${name} battery_recharge_voltage"
+    #    battery_under_voltage:
+    #      name: "${name} battery_under_voltage"
+    #    battery_bulk_voltage:
+    #      name: "${name} battery_bulk_voltage"
+    #    battery_float_voltage:
+    #      name: "${name} battery_float_voltage"
+    #    battery_type:
+    #      name: "${name} battery_type"
+    #    current_max_ac_charging_current:
+    #      name: "${name} current_max_ac_charging_current"
+    #    current_max_charging_current:
+    #      name: "${name} current_max_charging_current"
+    #    input_voltage_range:
+    #      name: "${name} input_voltage_range"
+    #    output_source_priority:
+    #      name: "${name} output_source_priority"
+    #    charger_source_priority:
+    #      name: "${name} charger_source_priority"
+    #    parallel_max_num:
+    #      name: "${name} parallel_max_num"
+    #    machine_type:
+    #      name: "${name} machine_type"
+    #    topology:
+    #      name: "${name} topology"
+    #    output_mode:
+    #      name: "${name} output_mode"
+    #    battery_redischarge_voltage:
+    #      name: "${name} battery_redischarge_voltage"
+    #    pv_ok_condition_for_parallel:
+    #      name: "${name} pv_ok_condition_for_parallel"
+    #    pv_power_balance:
+    #      name: "${name} pv_power_balance"
 
     # QPIGS
     grid_voltage:
@@ -123,8 +149,8 @@ sensor:
       name: "${name} battery_capacity_percent"
     inverter_heat_sink_temperature:
       name: "${name} inverter_heat_sink_temperature"
-    pv_input_current_for_battery:
-      name: "${name} pv_input_current_for_battery"
+    pv_input_current:
+      name: "${name} pv_input_current"
     pv_input_voltage:
       name: "${name} pv_input_voltage"
     battery_voltage_scc:
@@ -133,8 +159,8 @@ sensor:
       name: "${name} battery_discharge_current"
     battery_voltage_offset_for_fans_on:
       name: "${name} battery_voltage_offset_for_fans_on"
-#    eeprom_version:
-#      name: "${name} eeprom_version"
+    eeprom_version:
+      name: "${name} eeprom_version"
     pv_charging_power:
       name: "${name} pv_charging_power"
 
@@ -159,8 +185,8 @@ binary_sensor:
       name: "${name} add_sbu_priority_version"
     configuration_status:
       name: "${name} configuration_status"
-#    scc_firmware_version:
-#      name: "${name} scc_firmware_version"
+    #    scc_firmware_version:
+    #      name: "${name} scc_firmware_version"
     load_status:
       name: "${name} load_status"
     battery_voltage_to_steady_while_charging:
@@ -175,8 +201,12 @@ binary_sensor:
       name: "${name} charging_to_floating_mode"
     switch_on:
       name: "${name} switch_on"
-#    dustproof_installed:
-#      name: "${name} dustproof_installed"
+    reserved1:
+      name: "${name} reserved1"
+    reserved2:
+      name: "${name} reserved2"
+    #    dustproof_installed:
+    #      name: "${name} dustproof_installed"
     silence_buzzer_open_buzzer:
       name: "${name} silence_buzzer_open_buzzer"
     overload_bypass_function:
@@ -187,8 +217,20 @@ binary_sensor:
       name: "${name} overload_restart_function"
     over_temperature_restart_function:
       name: "${name} over_temperature_restart_function"
-#    backlight_on:
-#      name: "${name} backlight_on"
+    backlight_on:
+      name: "${name} backlight_on"
+    alarm_on_when_primary_source_interrupt:
+      name: "${name} alarm_on_when_primary_source_interrupt"
+    fault_code_record:
+      name: "${name} fault_code_record"
+    power_saving:
+      name: "${name} power_saving"
+    mod1:
+      name: "${name} mod1"
+    mod2:
+      name: "${name} mod2"
+    mod3:
+      name: "${name} mod3"
 
 switch:
   - platform: pipsolar
@@ -205,6 +247,8 @@ switch:
       name: "${name} pv_ok_condition_for_parallel"
     pv_power_balance:
       name: "${name} pv_power_balance"
+    dual_output:
+      name: "${name} dual_output"
 
 output:
   - platform: pipsolar
@@ -227,10 +271,12 @@ select:
         "Utility first": "POP00"
         "Solar only": "POP01"
         "Solar Battery Utility": "POP02"
+        "MKS": "POP03"
       statusmap:
         "0": "Utility first"
         "1": "Solar only"
         "2": "Solar Battery Utility"
+        "3": "MKS"
 
   - platform: pipsolar
     pipsolar_id: inverter0
