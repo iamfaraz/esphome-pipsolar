@@ -888,7 +888,7 @@ uint8_t Pipsolar::check_incoming_length_(uint8_t length) {
 uint8_t Pipsolar::check_incoming_crc_() {
   uint16_t crc16;
   crc16 = cal_crc_half_(read_buffer_, read_pos_ - 3);
-  ESP_LOGD(TAG2, (char) read_buffer_);
+  ESP_LOGD(TAG2, "%u\n", crc16);
   ESP_LOGD(TAG, "checking crc on incoming message");
   if (((uint8_t) ((crc16) >> 8)) == read_buffer_[read_pos_ - 3] &&
       ((uint8_t) ((crc16) & 0xff)) == read_buffer_[read_pos_ - 2]) {
