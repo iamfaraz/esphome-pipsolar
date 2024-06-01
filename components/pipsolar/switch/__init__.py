@@ -21,7 +21,7 @@ TYPES = {
     CONF_INPUT_VOLTAGE_RANGE: ("PGR01", "PGR00"),
     CONF_PV_OK_CONDITION_FOR_PARALLEL: ("PPVOKC1", "PPVOKC0"),
     CONF_PV_POWER_BALANCE: ("PSPB1", "PSPB0"),
-    CONF_PV_POWER_BALANCE: ("DO0", "DO1"),
+    CONF_DUAL_OUTPUT: ("DO0", "DO1"),
 }
 
 PipsolarSwitch = pipsolar_ns.class_("PipsolarSwitch", switch.Switch, cg.Component)
