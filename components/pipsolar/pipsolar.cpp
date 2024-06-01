@@ -112,19 +112,8 @@ void Pipsolar::loop() {
         if (this->current_max_ac_charging_current_) {
           this->current_max_ac_charging_current_->publish_state(value_current_max_ac_charging_current_);
         }
-        //  select for current_max_ac_charging_current
-        if (this->current_max_ac_charging_current_select_) {
-          std::string value = esphome::to_string(value_current_max_ac_charging_current_);
-          this->current_max_ac_charging_current_select_->map_and_publish(value);
-        }
-
         if (this->current_max_charging_current_) {
           this->current_max_charging_current_->publish_state(value_current_max_charging_current_);
-        }
-        // select for current_max_charging_current
-        if (this->current_max_charging_current_select_) {
-          std::string value = esphome::to_string(value_current_max_charging_current_);
-          this->current_max_charging_current_select_->map_and_publish(value);
         }
 
         if (this->input_voltage_range_) {
@@ -154,11 +143,6 @@ void Pipsolar::loop() {
         }
         if (this->charger_source_priority_) {
           this->charger_source_priority_->publish_state(value_charger_source_priority_);
-        }
-        // special for charger source priority select
-        if (this->charger_source_priority_select_) {
-          std::string value = esphome::to_string(value_charger_source_priority_);
-          this->charger_source_priority_select_->map_and_publish(value);
         }
 
         if (this->parallel_max_num_) {
