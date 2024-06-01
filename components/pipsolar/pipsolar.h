@@ -89,7 +89,8 @@ class Pipsolar : public uart::UARTDevice, public PollingComponent {
   PIPSOLAR_SENSOR(pv_charging_power, QPIGS, int)
   PIPSOLAR_BINARY_SENSOR(charging_to_floating_mode, QPIGS, int)
   PIPSOLAR_BINARY_SENSOR(switch_on, QPIGS, int)
-  PIPSOLAR_BINARY_SENSOR(dustproof_installed, QPIGS, int)
+  PIPSOLAR_BINARY_SENSOR(reserved1, QPIGS, int)
+  PIPSOLAR_BINARY_SENSOR(reserved2, QPIGS, int)
 
   // QPIRI values
   PIPSOLAR_SENSOR(grid_rating_voltage, QPIRI, float)
@@ -117,6 +118,9 @@ class Pipsolar : public uart::UARTDevice, public PollingComponent {
   PIPSOLAR_SENSOR(battery_redischarge_voltage, QPIRI, float)
   PIPSOLAR_SENSOR(pv_ok_condition_for_parallel, QPIRI, int)
   PIPSOLAR_SENSOR(pv_power_balance, QPIRI, int)
+  PIPSOLAR_SENSOR(battery_cutoff_voltage1, QPIRI, float)
+  PIPSOLAR_SENSOR(dual_output, QPIRI, int)
+  PIPSOLAR_SENSOR(battery_cutoff_voltage, QPIRI, float)
 
   // QMOD values
   PIPSOLAR_VALUED_TEXT_SENSOR(device_mode, QMOD, char)
@@ -131,6 +135,9 @@ class Pipsolar : public uart::UARTDevice, public PollingComponent {
   PIPSOLAR_BINARY_SENSOR(alarm_on_when_primary_source_interrupt, QFLAG, int)
   PIPSOLAR_BINARY_SENSOR(fault_code_record, QFLAG, int)
   PIPSOLAR_BINARY_SENSOR(power_saving, QFLAG, int)
+  PIPSOLAR_BINARY_SENSOR(mod1, QFLAG, int)
+  PIPSOLAR_BINARY_SENSOR(mod2, QFLAG, int)
+  PIPSOLAR_BINARY_SENSOR(mod3, QFLAG, int)
 
   // QPIWS values
   PIPSOLAR_BINARY_SENSOR(warnings_present, QPIWS, bool)
@@ -190,6 +197,7 @@ class Pipsolar : public uart::UARTDevice, public PollingComponent {
   PIPSOLAR_SWITCH(input_voltage_range_switch, QPIRI)
   PIPSOLAR_SWITCH(pv_ok_condition_for_parallel_switch, QPIRI)
   PIPSOLAR_SWITCH(pv_power_balance_switch, QPIRI)
+  PIPSOLAR_SWITCH(dual_output_switch, QPIRI)
 
   PIPSOLAR_SELECT(output_source_priority_select, QPIRI)
   PIPSOLAR_VALUED_SELECT(charging_discharging_control_select, QBATCD, std::string)

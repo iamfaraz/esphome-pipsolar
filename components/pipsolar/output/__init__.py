@@ -39,6 +39,8 @@ CONF_CURRENT_MAX_CHARGING_CURRENT = "current_max_charging_current"
 CONF_OUTPUT_SOURCE_PRIORITY = "output_source_priority"
 CONF_CHARGER_SOURCE_PRIORITY = "charger_source_priority"
 CONF_BATTERY_REDISCHARGE_VOLTAGE = "battery_redischarge_voltage"
+CONF_BATTERY_CUTOFF_VOLTAGE = "battery_cutoff_voltage"
+CONF_BATTERY_CUTOFF_VOLTAGE1 = "battery_cutoff_voltage1"
 
 TYPES = {
     CONF_BATTERY_BULK_VOLTAGE: (
@@ -57,12 +59,19 @@ TYPES = {
     CONF_BATTERY_TYPE: ([0, 1, 2], "PBT%02.0f"),
     CONF_CURRENT_MAX_AC_CHARGING_CURRENT: ([2, 10, 20], "MUCHGC0%02.0f"),
     CONF_CURRENT_MAX_CHARGING_CURRENT: ([10, 20, 30, 40], "MCHGC0%02.0f"),
-    CONF_OUTPUT_SOURCE_PRIORITY: ([0, 1, 2], "POP%02.0f"),
+    CONF_OUTPUT_SOURCE_PRIORITY: ([0, 1, 2, 3], "POP%02.0f"),
     CONF_CHARGER_SOURCE_PRIORITY: ([0, 1, 2, 3], "PCP%02.0f"),
     CONF_BATTERY_REDISCHARGE_VOLTAGE: (
         [0, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58],
         "PBDV%02.1f",
     ),
+    CONF_BATTERY_CUTOFF_VOLTAGE: (
+        [41.0, 42.0, 43.0, 44.0, 45.0, 46.0, 47.0, 48.0, 49.0, 50.0, 51.0],
+        "PBCV%02.1f"),
+
+    CONF_BATTERY_CUTOFF_VOLTAGE1: (
+        [41.0, 42.0, 43.0, 44.0, 45.0, 46.0, 47.0, 48.0, 49.0, 50.0, 51.0],
+        "PBCW%02.1f"),
 }
 
 CONFIG_SCHEMA = PIPSOLAR_COMPONENT_SCHEMA.extend(

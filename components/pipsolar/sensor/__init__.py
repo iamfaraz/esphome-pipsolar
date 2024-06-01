@@ -48,6 +48,9 @@ CONF_OUTPUT_MODE = "output_mode"
 CONF_BATTERY_REDISCHARGE_VOLTAGE = "battery_redischarge_voltage"
 CONF_PV_OK_CONDITION_FOR_PARALLEL = "pv_ok_condition_for_parallel"
 CONF_PV_POWER_BALANCE = "pv_power_balance"
+CONF_BATTERY_CUTOFF_VOLTAGE = "battery_cutoff_voltage"
+CONF_DUAL_OUTPUT = "dual_output"
+CONF_BATTERY_CUTOFF_VOLTAGE1 = "battery_cutoff_voltage1"
 
 # QPIGS sensors
 
@@ -172,10 +175,23 @@ TYPES = {
         accuracy_decimals=1,
         device_class=DEVICE_CLASS_VOLTAGE,
     ),
+    CONF_BATTERY_CUTOFF_VOLTAGE: sensor.sensor_schema(
+        unit_of_measurement=UNIT_VOLT,
+        accuracy_decimals=1,
+        device_class=DEVICE_CLASS_VOLTAGE,
+    ),
+    CONF_BATTERY_CUTOFF_VOLTAGE1: sensor.sensor_schema(
+        unit_of_measurement=UNIT_VOLT,
+        accuracy_decimals=1,
+        device_class=DEVICE_CLASS_VOLTAGE,
+    ),
     CONF_PV_OK_CONDITION_FOR_PARALLEL: sensor.sensor_schema(
         accuracy_decimals=1,
     ),
     CONF_PV_POWER_BALANCE: sensor.sensor_schema(
+        accuracy_decimals=1,
+    ),
+    CONF_DUAL_OUTPUT: sensor.sensor_schema(
         accuracy_decimals=1,
     ),
     CONF_GRID_VOLTAGE: sensor.sensor_schema(
