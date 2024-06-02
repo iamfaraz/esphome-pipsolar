@@ -228,12 +228,6 @@ binary_sensor:
 switch:
   - platform: pipsolar
     pipsolar_id: inverter0
-    output_source_priority_utility:
-      name: "${name} output_source_priority_utility"
-    output_source_priority_solar:
-      name: "${name} output_source_priority_solar"
-    output_source_priority_battery:
-      name: "${name} output_source_priority_battery"
     input_voltage_range:
       name: "${name} input_voltage_range"
     pv_ok_condition_for_parallel:

@@ -12,15 +12,15 @@ Kudos to [@andreashergert1984](https://github.com/andreashergert1984) for the gr
 
 ## Supported devices
 
-* PIP4048 compatible PV Inverter
-
+- PIP8048 compatible PV Inverter
+- Fronus PV7200 Inverter
 
 ## Requirements
 
-* [ESPHome 2021.8.0 or higher](https://github.com/esphome/esphome/releases).
-* One half of an ethernet cable with RJ45 connector
-* RS232-to-TTL module (`MAX3232CSE` f.e.)
-* Generic ESP32 or ESP8266 board
+- [ESPHome 2021.8.0 or higher](https://github.com/esphome/esphome/releases).
+- One half of an ethernet cable with RJ45 connector
+- RS232-to-TTL module (`MAX3232CSE` f.e.)
+- Generic ESP32 or ESP8266 board
 
 ## Schematics
 
@@ -41,16 +41,16 @@ Kudos to [@andreashergert1984](https://github.com/andreashergert1984) for the gr
 
 ### PIP RJ45 jack
 
-| Pin     | Purpose      | RS232-to-TTL pin  | Color T-568B |
-| :-----: | :----------- | :---------------- | :------------|
-|    1    | TX           | TX &#8592;        | White-Orange |
-|    2    | RX           | RX &#8594;        | Orange       |
-|    3    |              |                   |              |
-|    4    | VCC 12V (?)  | -                 | Blue         |
-|    5    |              |                   |              |
-|    6    |              |                   |              |
-|    7    | VCC 12V      | -                 | White-Brown  |
-|    8    | GND          | GND               | Brown        |
+| Pin | Purpose     | RS232-to-TTL pin | Color T-568B |
+| :-: | :---------- | :--------------- | :----------- |
+|  1  | TX          | TX &#8592;       | White-Orange |
+|  2  | RX          | RX &#8594;       | Orange       |
+|  3  |             |                  |              |
+|  4  | VCC 12V (?) | -                | Blue         |
+|  5  |             |                  |              |
+|  6  |             |                  |              |
+|  7  | VCC 12V     | -                | White-Brown  |
+|  8  | GND         | GND              | Brown        |
 
 Please be aware of the different RJ45 pinout colors ([T-568A vs. T-568B](images/rj45-colors-t568a-vs-t568.png)).
 
@@ -94,7 +94,7 @@ Take a look at the [official documentation of the component](https://esphome.io/
 
 ## References
 
-* https://github.com/esphome/esphome/pull/1664
-* https://github.com/esphome/esphome-docs/pull/1084/files
-* https://github.com/andreashergert1984/esphome/tree/feature_pipsolar_anh
-* https://github.com/jblance/mpp-solar/tree/master/docs/protocols
+- https://github.com/esphome/esphome/pull/1664
+- https://github.com/esphome/esphome-docs/pull/1084/files
+- https://github.com/andreashergert1984/esphome/tree/feature_pipsolar_anh
+- https://github.com/jblance/mpp-solar/tree/master/docs/protocols
