@@ -12,14 +12,17 @@ CONF_OUTPUT_SOURCE_PRIORITY_BATTERY = "output_source_priority_battery"
 CONF_INPUT_VOLTAGE_RANGE = "input_voltage_range"
 CONF_PV_OK_CONDITION_FOR_PARALLEL = "pv_ok_condition_for_parallel"
 CONF_PV_POWER_BALANCE = "pv_power_balance"
+CONF_PV_DUAL_OUTPUT = "pv_dual_output"
 
 TYPES = {
     CONF_OUTPUT_SOURCE_PRIORITY_UTILITY: ("POP00", None),
     CONF_OUTPUT_SOURCE_PRIORITY_SOLAR: ("POP01", None),
     CONF_OUTPUT_SOURCE_PRIORITY_BATTERY: ("POP02", None),
+    CONF_OUTPUT_SOURCE_PRIORITY_MKS: ("POP03", None),
     CONF_INPUT_VOLTAGE_RANGE: ("PGR01", "PGR00"),
     CONF_PV_OK_CONDITION_FOR_PARALLEL: ("PPVOKC1", "PPVOKC0"),
     CONF_PV_POWER_BALANCE: ("PSPB1", "PSPB0"),
+    CONF_PV_DUAL_OUTPUT: ("PSPDO1", "PSPDO0"),
 }
 
 PipsolarSwitch = pipsolar_ns.class_("PipsolarSwitch", switch.Switch, cg.Component)

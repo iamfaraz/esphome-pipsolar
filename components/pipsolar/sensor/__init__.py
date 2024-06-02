@@ -31,6 +31,8 @@ CONF_AC_OUTPUT_RATING_CURRENT = "ac_output_rating_current"
 CONF_AC_OUTPUT_RATING_APPARENT_POWER = "ac_output_rating_apparent_power"
 CONF_AC_OUTPUT_RATING_ACTIVE_POWER = "ac_output_rating_active_power"
 CONF_BATTERY_RATING_VOLTAGE = "battery_rating_voltage"
+CONF_UNKNOWN = "unknown"
+CONF_DUAL_OUTPUT_BATTERY_CUTOFF = "dual_output_battery_cutoff"
 CONF_BATTERY_RECHARGE_VOLTAGE = "battery_recharge_voltage"
 CONF_BATTERY_UNDER_VOLTAGE = "battery_under_voltage"
 CONF_BATTERY_BULK_VOLTAGE = "battery_bulk_voltage"
@@ -45,9 +47,10 @@ CONF_PARALLEL_MAX_NUM = "parallel_max_num"
 CONF_MACHINE_TYPE = "machine_type"
 CONF_TOPOLOGY = "topology"
 CONF_OUTPUT_MODE = "output_mode"
-CONF_BATTERY_REDISCHARGE_VOLTAGE = "battery_redischarge_voltage"
+CONF_BATTERY_DISCHARGE_VOLTAGE = "battery_discharge_voltage"
 CONF_PV_OK_CONDITION_FOR_PARALLEL = "pv_ok_condition_for_parallel"
 CONF_PV_POWER_BALANCE = "pv_power_balance"
+CONF_PV_DUAL_OUTPUT = "pv_dual_output"
 
 # QPIGS sensors
 
@@ -61,8 +64,8 @@ CONF_OUTPUT_LOAD_PERCENT = "output_load_percent"
 CONF_BATTERY_CHARGING_CURRENT = "battery_charging_current"
 CONF_BATTERY_CAPACITY_PERCENT = "battery_capacity_percent"
 CONF_INVERTER_HEAT_SINK_TEMPERATURE = "inverter_heat_sink_temperature"
-CONF_PV1_INPUT_CURRENT = "pv1_input_current"
-CONF_PV1_INPUT_VOLTAGE = "pv1_input_voltage"
+CONF_PV_INPUT_CURRENT = "pv_input_current"
+CONF_PV_INPUT_VOLTAGE = "pv_input_voltage"
 CONF_BATTERY_VOLTAGE_SCC = "battery_voltage_scc"
 CONF_BATTERY_DISCHARGE_CURRENT = "battery_discharge_current"
 CONF_ADD_SBU_PRIORITY_VERSION = "add_sbu_priority_version"
@@ -70,13 +73,7 @@ CONF_CONFIGURATION_STATUS = "configuration_status"
 CONF_SCC_FIRMWARE_VERSION = "scc_firmware_version"
 CONF_BATTERY_VOLTAGE_OFFSET_FOR_FANS_ON = "battery_voltage_offset_for_fans_on"
 CONF_EEPROM_VERSION = "eeprom_version"
-CONF_PV1_CHARGING_POWER = "pv1_charging_power"
-
-# QPIGS2 sensors
-
-CONF_PV2_INPUT_CURRENT = "pv2_input_current"
-CONF_PV2_INPUT_VOLTAGE = "pv2_input_voltage"
-CONF_PV2_CHARGING_POWER = "pv2_charging_power"
+CONF_PV_CHARGING_POWER = "pv_charging_power"
 
 
 TYPES = {
@@ -115,6 +112,16 @@ TYPES = {
         device_class=DEVICE_CLASS_POWER,
     ),
     CONF_BATTERY_RATING_VOLTAGE: sensor.sensor_schema(
+        unit_of_measurement=UNIT_VOLT,
+        accuracy_decimals=1,
+        device_class=DEVICE_CLASS_VOLTAGE,
+    ),
+    CONF_UNKNOWN: sensor.sensor_schema(
+        unit_of_measurement=UNIT_VOLT,
+        accuracy_decimals=1,
+        device_class=DEVICE_CLASS_VOLTAGE,
+    ),
+    CONF_DUAL_OUTPUT_BATTERY_CUTOFF: sensor.sensor_schema(
         unit_of_measurement=UNIT_VOLT,
         accuracy_decimals=1,
         device_class=DEVICE_CLASS_VOLTAGE,
@@ -173,7 +180,7 @@ TYPES = {
     CONF_OUTPUT_MODE: sensor.sensor_schema(
         accuracy_decimals=0,
     ),
-    CONF_BATTERY_REDISCHARGE_VOLTAGE: sensor.sensor_schema(
+    CONF_BATTERY_DISCHARGE_VOLTAGE: sensor.sensor_schema(
         unit_of_measurement=UNIT_VOLT,
         accuracy_decimals=1,
         device_class=DEVICE_CLASS_VOLTAGE,
@@ -182,6 +189,9 @@ TYPES = {
         accuracy_decimals=1,
     ),
     CONF_PV_POWER_BALANCE: sensor.sensor_schema(
+        accuracy_decimals=1,
+    ),
+    CONF_PV_DUAL_OUTPUT: sensor.sensor_schema(
         accuracy_decimals=1,
     ),
     CONF_GRID_VOLTAGE: sensor.sensor_schema(
@@ -241,12 +251,12 @@ TYPES = {
         accuracy_decimals=1,
         device_class=DEVICE_CLASS_TEMPERATURE,
     ),
-    CONF_PV1_INPUT_CURRENT: sensor.sensor_schema(
+    CONF_PV_INPUT_CURRENT: sensor.sensor_schema(
         unit_of_measurement=UNIT_AMPERE,
         accuracy_decimals=1,
         device_class=DEVICE_CLASS_CURRENT,
     ),
-    CONF_PV1_INPUT_VOLTAGE: sensor.sensor_schema(
+    CONF_PV_INPUT_VOLTAGE: sensor.sensor_schema(
         unit_of_measurement=UNIT_VOLT,
         accuracy_decimals=1,
         device_class=DEVICE_CLASS_VOLTAGE,
@@ -269,22 +279,7 @@ TYPES = {
     CONF_EEPROM_VERSION: sensor.sensor_schema(
         accuracy_decimals=1,
     ),
-    CONF_PV1_CHARGING_POWER: sensor.sensor_schema(
-        unit_of_measurement=UNIT_WATT,
-        accuracy_decimals=1,
-        device_class=DEVICE_CLASS_POWER,
-    ),
-    CONF_PV2_INPUT_CURRENT: sensor.sensor_schema(
-        unit_of_measurement=UNIT_AMPERE,
-        accuracy_decimals=1,
-        device_class=DEVICE_CLASS_CURRENT,
-    ),
-    CONF_PV2_INPUT_VOLTAGE: sensor.sensor_schema(
-        unit_of_measurement=UNIT_VOLT,
-        accuracy_decimals=1,
-        device_class=DEVICE_CLASS_VOLTAGE,
-    ),
-    CONF_PV2_CHARGING_POWER: sensor.sensor_schema(
+    CONF_PV_CHARGING_POWER: sensor.sensor_schema(
         unit_of_measurement=UNIT_WATT,
         accuracy_decimals=1,
         device_class=DEVICE_CLASS_POWER,

@@ -94,6 +94,12 @@ void Pipsolar::loop() {
         if (this->battery_rating_voltage_) {
           this->battery_rating_voltage_->publish_state(value_battery_rating_voltage_);
         }
+        if (this->unknown_) {
+          this->unknown_->publish_state(value_unknown_);
+        }
+        if (this->dual_output_battery_cutoff_) {
+          this->dual_output_battery_cutoff_->publish_state(value_dual_output_battery_cutoff_);
+        }
         if (this->battery_recharge_voltage_) {
           this->battery_recharge_voltage_->publish_state(value_battery_recharge_voltage_);
         }
@@ -117,11 +123,11 @@ void Pipsolar::loop() {
           std::string value = esphome::to_string(value_current_max_ac_charging_current_);
           this->current_max_ac_charging_current_select_->map_and_publish(value);
         }
-        
+
         if (this->current_max_charging_current_) {
           this->current_max_charging_current_->publish_state(value_current_max_charging_current_);
         }
-         //select for current_max_charging_current
+        // select for current_max_charging_current
         if (this->current_max_charging_current_select_) {
           std::string value = esphome::to_string(value_current_max_charging_current_);
           this->current_max_charging_current_select_->map_and_publish(value);
@@ -142,16 +148,6 @@ void Pipsolar::loop() {
           std::string value = esphome::to_string(value_output_source_priority_);
           this->output_source_priority_select_->map_and_publish(value);
         }
-        // special for output source priority switches
-        if (this->output_source_priority_utility_switch_) {
-          this->output_source_priority_utility_switch_->publish_state(value_output_source_priority_ == 0);
-        }
-        if (this->output_source_priority_solar_switch_) {
-          this->output_source_priority_solar_switch_->publish_state(value_output_source_priority_ == 1);
-        }
-        if (this->output_source_priority_battery_switch_) {
-          this->output_source_priority_battery_switch_->publish_state(value_output_source_priority_ == 2);
-        }
         if (this->charger_source_priority_) {
           this->charger_source_priority_->publish_state(value_charger_source_priority_);
         }
@@ -160,7 +156,7 @@ void Pipsolar::loop() {
           std::string value = esphome::to_string(value_charger_source_priority_);
           this->charger_source_priority_select_->map_and_publish(value);
         }
-        
+
         if (this->parallel_max_num_) {
           this->parallel_max_num_->publish_state(value_parallel_max_num_);
         }
@@ -173,8 +169,8 @@ void Pipsolar::loop() {
         if (this->output_mode_) {
           this->output_mode_->publish_state(value_output_mode_);
         }
-        if (this->battery_redischarge_voltage_) {
-          this->battery_redischarge_voltage_->publish_state(value_battery_redischarge_voltage_);
+        if (this->battery_discharge_voltage_) {
+          this->battery_discharge_voltage_->publish_state(value_battery_discharge_voltage_);
         }
         if (this->pv_ok_condition_for_parallel_) {
           this->pv_ok_condition_for_parallel_->publish_state(value_pv_ok_condition_for_parallel_);
@@ -189,6 +185,13 @@ void Pipsolar::loop() {
         // special for power balance switch
         if (this->pv_power_balance_switch_) {
           this->pv_power_balance_switch_->publish_state(value_pv_power_balance_ == 1);
+        }
+        if (this->pv_dual_output_) {
+          this->pv_dual_output_->publish_state(value_pv_dual_output_ == 1);
+        }
+        // special for power balance switch
+        if (this->pv_dual_output_switch_) {
+          this->pv_dual_output_switch_->publish_state(value_dual_output_ == 1);
         }
         this->state_ = STATE_IDLE;
         break;
@@ -229,11 +232,11 @@ void Pipsolar::loop() {
         if (this->inverter_heat_sink_temperature_) {
           this->inverter_heat_sink_temperature_->publish_state(value_inverter_heat_sink_temperature_);
         }
-        if (this->pv1_input_current_) {
-          this->pv1_input_current_->publish_state(value_pv1_input_current_);
+        if (this->pv_input_current_) {
+          this->pv_input_current_->publish_state(value_pv_input_current_);
         }
-        if (this->pv1_input_voltage_) {
-          this->pv1_input_voltage_->publish_state(value_pv1_input_voltage_);
+        if (this->pv_input_voltage_) {
+          this->pv_input_voltage_->publish_state(value_pv_input_voltage_);
         }
         if (this->battery_voltage_scc_) {
           this->battery_voltage_scc_->publish_state(value_battery_voltage_scc_);
@@ -272,8 +275,8 @@ void Pipsolar::loop() {
         if (this->eeprom_version_) {
           this->eeprom_version_->publish_state(value_eeprom_version_);
         }
-        if (this->pv1_charging_power_) {
-          this->pv1_charging_power_->publish_state(value_pv1_charging_power_);
+        if (this->pv_charging_power_) {
+          this->pv_charging_power_->publish_state(value_pv_charging_power_);
         }
         if (this->charging_to_floating_mode_) {
           this->charging_to_floating_mode_->publish_state(value_charging_to_floating_mode_);
@@ -283,18 +286,6 @@ void Pipsolar::loop() {
         }
         if (this->dustproof_installed_) {
           this->dustproof_installed_->publish_state(value_dustproof_installed_);
-        }
-        this->state_ = STATE_IDLE;
-        break;
-      case POLLING_QPIGS2:
-        if (this->pv2_input_current_) {
-          this->pv2_input_current_->publish_state(value_pv2_input_current_);
-        }
-        if (this->pv2_input_voltage_) {
-          this->pv2_input_voltage_->publish_state(value_pv2_input_voltage_);
-        }
-        if (this->pv2_charging_power_) {
-          this->pv2_charging_power_->publish_state(value_pv2_charging_power_);
         }
         this->state_ = STATE_IDLE;
         break;
@@ -332,6 +323,15 @@ void Pipsolar::loop() {
         }
         if (this->power_saving_) {
           this->power_saving_->publish_state(value_power_saving_);
+        }
+        if (this->unknown_flag1_) {
+          this->unknown_flag1_->publish_state(value_unknown_flag1_);
+        }
+        if (this->unknown_flag2_) {
+          this->unknown_flag2_->publish_state(value_unknown_flag2_);
+        }
+        if (this->unknown_flag3_) {
+          this->unknown_flag3_->publish_state(value_unknown_flag3_);
         }
         this->state_ = STATE_IDLE;
         break;
@@ -461,7 +461,7 @@ void Pipsolar::loop() {
           this->charging_discharging_control_select_->map_and_publish(value_charging_discharging_control_select_);
         }
         this->state_ = STATE_IDLE;
-        break;   
+        break;
       case POLLING_QT:
       case POLLING_QMN:
         this->state_ = STATE_IDLE;
@@ -477,18 +477,36 @@ void Pipsolar::loop() {
     switch (this->used_polling_commands_[this->last_polling_command_].identifier) {
       case POLLING_QPIRI:
         ESP_LOGD(TAG, "Decode QPIRI");
-        sscanf(tmp, "(%f %f %f %f %f %d %d %f %f %f %f %f %d %d %d %d %d %d %d %d %d %d %f %d %d",          // NOLINT
-               &value_grid_rating_voltage_, &value_grid_rating_current_, &value_ac_output_rating_voltage_,  // NOLINT
-               &value_ac_output_rating_frequency_, &value_ac_output_rating_current_,                        // NOLINT
-               &value_ac_output_rating_apparent_power_, &value_ac_output_rating_active_power_,              // NOLINT
-               &value_battery_rating_voltage_, &value_battery_recharge_voltage_,                            // NOLINT
-               &value_battery_under_voltage_, &value_battery_bulk_voltage_, &value_battery_float_voltage_,  // NOLINT
-               &value_battery_type_, &value_current_max_ac_charging_current_,                               // NOLINT
-               &value_current_max_charging_current_, &value_input_voltage_range_,                           // NOLINT
-               &value_output_source_priority_, &value_charger_source_priority_, &value_parallel_max_num_,   // NOLINT
-               &value_machine_type_, &value_topology_, &value_output_mode_,                                 // NOLINT
-               &value_battery_redischarge_voltage_, &value_pv_ok_condition_for_parallel_,                   // NOLINT
-               &value_pv_power_balance_);                                                                   // NOLINT
+        sscanf(tmp, "(%f %f %f %f %f %d %d %f %f %f %f %f %d %d %d %d %d %d %d %d %d %d %f %d %d %f %d %f",  // NOLINT
+               /*     02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29*/  // NOLINT
+               /* 02 */ &value_grid_rating_voltage_,                                                         // NOLINT
+               /* 03 */ &value_grid_rating_current_,                                                         // NOLINT
+               /* 04 */ &value_ac_output_rating_voltage_,                                                    // NOLINT
+               /* 05 */ &value_ac_output_rating_frequency_,                                                  // NOLINT
+               /* 06 */ &value_ac_output_rating_current_,                                                    // NOLINT
+               /* 07 */ &value_ac_output_rating_apparent_power_,                                             // NOLINT
+               /* 08 */ &value_ac_output_rating_active_power_,                                               // NOLINT
+               /* 09 */ &value_battery_rating_voltage_,                                                      // NOLINT
+               /* 10 */ &value_battery_recharge_voltage_,                                                    // NOLINT
+               /* 11 */ &value_battery_under_voltage_,                                                       // NOLINT
+               /* 12 */ &value_battery_bulk_voltage_,                                                        // NOLINT
+               /* 13 */ &value_battery_float_voltage_,                                                       // NOLINT
+               /* 14 */ &value_battery_type_,                                                                // NOLINT
+               /* 15 */ &value_current_max_ac_charging_current_,                                             // NOLINT
+               /* 16 */ &value_current_max_charging_current_,                                                // NOLINT
+               /* 17 */ &value_input_voltage_range_,                                                         // NOLINT
+               /* 18 */ &value_output_source_priority_,                                                      // NOLINT
+               /* 19 */ &value_charger_source_priority_,                                                     // NOLINT
+               /* 20 */ &value_parallel_max_num_,                                                            // NOLINT
+               /* 21 */ &value_machine_type_,                                                                // NOLINT
+               /* 22 */ &value_topology_,                                                                    // NOLINT
+               /* 23 */ &value_output_mode_,                                                                 // NOLINT
+               /* 24 */ &value_battery_discharge_voltage_,                                                   // NOLINT
+               /* 25 */ &value_pv_ok_condition_for_parallel_,                                                // NOLINT
+               /* 26 */ &value_pv_power_balance_,                                                            // NOLINT
+               /* 27 */ &value_unknown_,                                                                     // NOLINT
+               /* 28 */ &value_pv_dual_output_,                                                              // NOLINT
+               /* 29 */ &value_dual_output_battery_cutoff_);                                                 // NOLINT
         if (this->last_qpiri_) {
           this->last_qpiri_->publish_state(tmp);
         }
@@ -503,32 +521,39 @@ void Pipsolar::loop() {
         sscanf(                                                                                              // NOLINT
             tmp,                                                                                             // NOLINT
             "(%f %f %f %f %d %d %d %d %f %d %d %d %f %f %f %d %1d%1d%1d%1d%1d%1d%1d%1d %d %d %d %1d%1d%1d",  // NOLINT
-            &value_grid_voltage_, &value_grid_frequency_, &value_ac_output_voltage_,                         // NOLINT
-            &value_ac_output_frequency_,                                                                     // NOLINT
-            &value_ac_output_apparent_power_, &value_ac_output_active_power_, &value_output_load_percent_,   // NOLINT
-            &value_bus_voltage_, &value_battery_voltage_, &value_battery_charging_current_,                  // NOLINT
-            &value_battery_capacity_percent_, &value_inverter_heat_sink_temperature_,                        // NOLINT
-            &value_pv1_input_current_, &value_pv1_input_voltage_, &value_battery_voltage_scc_,               // NOLINT
-            &value_battery_discharge_current_, &value_add_sbu_priority_version_,                             // NOLINT
-            &value_configuration_status_, &value_scc_firmware_version_, &value_load_status_,                 // NOLINT
-            &value_battery_voltage_to_steady_while_charging_, &value_charging_status_,                       // NOLINT
-            &value_scc_charging_status_, &value_ac_charging_status_,                                         // NOLINT
-            &value_battery_voltage_offset_for_fans_on_, &value_eeprom_version_, &value_pv1_charging_power_,  // NOLINT
-            &value_charging_to_floating_mode_, &value_switch_on_,                                            // NOLINT
-            &value_dustproof_installed_);                                                                    // NOLINT
+            /*02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18                       19 20 21 22*/         // NOLINT
+            /* 02 */ &value_grid_voltage_,                                                                   // NOLINT
+            /* 03 */ &value_grid_frequency_,                                                                 // NOLINT
+            /* 04 */ &value_ac_output_voltage_,                                                              // NOLINT
+            /* 05 */ &value_ac_output_frequency_,                                                            // NOLINT
+            /* 06 */ &value_ac_output_apparent_power_,                                                       // NOLINT
+            /* 07 */ &value_ac_output_active_power_,                                                         // NOLINT
+            /* 08 */ &value_output_load_percent_,                                                            // NOLINT
+            /* 09 */ &value_bus_voltage_,                                                                    // NOLINT
+            /* 10 */ &value_battery_voltage_,                                                                // NOLINT
+            /* 11 */ &value_battery_charging_current_,                                                       // NOLINT
+            /* 12 */ &value_battery_capacity_percent_,                                                       // NOLINT
+            /* 13 */ &value_inverter_heat_sink_temperature_,                                                 // NOLINT
+            /* 14 */ &value_pv_input_current_,                                                               // NOLINT
+            /* 15 */ &value_pv_input_voltage_,                                                               // NOLINT
+            /* 16 */ &value_battery_voltage_scc_,                                                            // NOLINT
+            /* 17 */ &value_battery_discharge_current_,                                                      // NOLINT
+            /* 18 */ &value_add_sbu_priority_version_,                                                       // NOLINT
+            /* 18 */ &value_configuration_status_,                                                           // NOLINT
+            /* 18 */ &value_scc_firmware_version_,                                                           // NOLINT
+            /* 18 */ &value_load_status_,                                                                    // NOLINT
+            /* 18 */ &value_battery_voltage_to_steady_while_charging_,                                       // NOLINT
+            /* 18 */ &value_charging_status_,                                                                // NOLINT
+            /* 18 */ &value_scc_charging_status_,                                                            // NOLINT
+            /* 18 */ &value_ac_charging_status_,                                                             // NOLINT
+            /* 19 */ &value_battery_voltage_offset_for_fans_on_,                                             // NOLINT
+            /* 20 */ &value_eeprom_version_,                                                                 // NOLINT
+            /* 21 */ &value_pv_charging_power_,                                                              // NOLINT
+            /* 22 */ &value_charging_to_floating_mode_,                                                      // NOLINT
+            /* 22 */ &value_switch_on_,                                                                      // NOLINT
+            /* 22 */ &value_dustproof_installed_);                                                           // NOLINT
         if (this->last_qpigs_) {
           this->last_qpigs_->publish_state(tmp);
-        }
-        this->state_ = STATE_POLL_DECODED;
-        break;
-      case POLLING_QPIGS2:
-        ESP_LOGD(TAG, "Decode QPIGS2");
-        sscanf(                                                                                 // NOLINT
-            tmp,                                                                                // NOLINT
-            "(%f %f %d",                                                                        // NOLINT
-            &value_pv2_input_current_, &value_pv2_input_voltage_, &value_pv2_charging_power_);  // NOLINT
-        if (this->last_qpigs2_) {
-          this->last_qpigs2_->publish_state(tmp);
         }
         this->state_ = STATE_POLL_DECODED;
         break;
@@ -578,6 +603,15 @@ void Pipsolar::loop() {
               break;
             case 'j':
               this->value_power_saving_ = enabled;
+              break;
+            case 'l':
+              this->value_unknown_flag1_ = enabled;
+              break;
+            case 'g':
+              this->value_unknown_flag2_ = enabled;
+              break;
+            case 'd':
+              this->value_unknown_flag3_ = enabled;
               break;
           }
         }
@@ -858,15 +892,15 @@ uint8_t Pipsolar::check_incoming_crc_() {
   uint16_t crc16;
   crc16 = cal_crc_half_(read_buffer_, read_pos_ - 3);
   ESP_LOGD(TAG, "checking crc on incoming message");
-  if (((uint8_t)((crc16) >> 8)) == read_buffer_[read_pos_ - 3] &&
-      ((uint8_t)((crc16) &0xff)) == read_buffer_[read_pos_ - 2]) {
+  if (((uint8_t) ((crc16) >> 8)) == read_buffer_[read_pos_ - 3] &&
+      ((uint8_t) ((crc16) & 0xff)) == read_buffer_[read_pos_ - 2]) {
     ESP_LOGD(TAG, "CRC OK");
     read_buffer_[read_pos_ - 1] = 0;
     read_buffer_[read_pos_ - 2] = 0;
     read_buffer_[read_pos_ - 3] = 0;
     return 1;
   }
-  ESP_LOGD(TAG, "CRC NOK expected: %X %X but got: %X %X", ((uint8_t)((crc16) >> 8)), ((uint8_t)((crc16) &0xff)),
+  ESP_LOGD(TAG, "CRC NOK expected: %X %X but got: %X %X", ((uint8_t) ((crc16) >> 8)), ((uint8_t) ((crc16) & 0xff)),
            read_buffer_[read_pos_ - 3], read_buffer_[read_pos_ - 2]);
   return 0;
 }
@@ -888,8 +922,8 @@ uint8_t Pipsolar::send_next_command_() {
     crc16 = cal_crc_half_(byte_command, length);
     this->write_str(command);
     // checksum
-    this->write(((uint8_t)((crc16) >> 8)));   // highbyte
-    this->write(((uint8_t)((crc16) &0xff)));  // lowbyte
+    this->write(((uint8_t) ((crc16) >> 8)));    // highbyte
+    this->write(((uint8_t) ((crc16) & 0xff)));  // lowbyte
     // end Byte
     this->write(0x0D);
     ESP_LOGD(TAG, "Sending command from queue: %s with length %d", command, length);
@@ -917,8 +951,8 @@ void Pipsolar::send_next_poll_() {
   this->write_array(this->used_polling_commands_[this->last_polling_command_].command,
                     this->used_polling_commands_[this->last_polling_command_].length);
   // checksum
-  this->write(((uint8_t)((crc16) >> 8)));   // highbyte
-  this->write(((uint8_t)((crc16) &0xff)));  // lowbyte
+  this->write(((uint8_t) ((crc16) >> 8)));    // highbyte
+  this->write(((uint8_t) ((crc16) & 0xff)));  // lowbyte
   // end Byte
   this->write(0x0D);
   ESP_LOGD(TAG, "Sending polling command : %s with length %d",
@@ -970,7 +1004,7 @@ void Pipsolar::add_polling_command_(const char *command, ENUMPollingCommand poll
       used_polling_command.command = new uint8_t[length];  // NOLINT(cppcoreguidelines-owning-memory)
       size_t i = 0;
       for (; beg != end; ++beg, ++i) {
-        used_polling_command.command[i] = (uint8_t)(*beg);
+        used_polling_command.command[i] = (uint8_t) (*beg);
       }
       used_polling_command.errors = 0;
       used_polling_command.identifier = polling_command;
@@ -995,17 +1029,17 @@ uint16_t Pipsolar::cal_crc_half_(uint8_t *msg, uint8_t len) {
   crc = 0;
 
   while (len-- != 0) {
-    da = ((uint8_t)(crc >> 8)) >> 4;
+    da = ((uint8_t) (crc >> 8)) >> 4;
     crc <<= 4;
     crc ^= crc_ta[da ^ (*ptr >> 4)];
-    da = ((uint8_t)(crc >> 8)) >> 4;
+    da = ((uint8_t) (crc >> 8)) >> 4;
     crc <<= 4;
     crc ^= crc_ta[da ^ (*ptr & 0x0f)];
     ptr++;
   }
 
   b_crc_low = crc;
-  b_crc_hign = (uint8_t)(crc >> 8);
+  b_crc_hign = (uint8_t) (crc >> 8);
 
   if (b_crc_low == 0x28 || b_crc_low == 0x0d || b_crc_low == 0x0a)
     b_crc_low++;
