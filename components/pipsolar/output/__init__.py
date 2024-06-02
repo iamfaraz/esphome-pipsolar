@@ -39,6 +39,7 @@ CONF_CURRENT_MAX_CHARGING_CURRENT = "current_max_charging_current"
 CONF_OUTPUT_SOURCE_PRIORITY = "output_source_priority"
 CONF_CHARGER_SOURCE_PRIORITY = "charger_source_priority"
 CONF_BATTERY_DISCHARGE_VOLTAGE = "battery_discharge_voltage"
+CONF_DUAL_OUTPUT_BATTERY_CUTOFF = "dual_output_battery_cutoff"
 
 TYPES = {
     CONF_BATTERY_BULK_VOLTAGE: (
