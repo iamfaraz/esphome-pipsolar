@@ -191,7 +191,7 @@ void Pipsolar::loop() {
         }
         // special for power balance switch
         if (this->pv_dual_output_switch_) {
-          this->pv_dual_output_switch_->publish_state(value_dual_output_ == 1);
+          this->pv_dual_output_switch_->publish_state(value_pv_dual_output_ == 1);
         }
         this->state_ = STATE_IDLE;
         break;
