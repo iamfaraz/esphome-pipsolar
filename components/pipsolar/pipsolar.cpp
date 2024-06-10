@@ -132,6 +132,11 @@ void Pipsolar::loop() {
           std::string value = esphome::to_string(value_current_max_charging_current_);
           this->current_max_charging_current_select_->map_and_publish(value);
         }
+        // select for current_max_charging_current
+        if (this->pv_grid_tie_current_select_) {
+          std::string value = esphome::to_string(value_pv_grid_tie_current_);
+          this->pv_grid_tie_current_select_->map_and_publish(value);
+        }
 
         if (this->input_voltage_range_) {
           this->input_voltage_range_->publish_state(value_input_voltage_range_);
@@ -187,7 +192,7 @@ void Pipsolar::loop() {
           this->pv_power_balance_switch_->publish_state(value_pv_power_balance_ == 1);
         }
         if (this->pv_grid_tie_current_) {
-          this->pv_grid_tie_current_->publish_state(value_pv_grid_tie_current_ == 1);
+          this->pv_grid_tie_current_->publish_state(value_pv_grid_tie_current_);
         }
         this->state_ = STATE_IDLE;
         break;
@@ -510,6 +515,7 @@ void Pipsolar::loop() {
         this->current_max_ac_charging_current_select_ = value_current_max_ac_charging_current_;
         this->current_max_charging_current_select_ = value_current_max_charging_current_;
         */
+        this->pv_grid_tie_current_select_ = value_pv_grid_tie_current_;
         this->state_ = STATE_POLL_DECODED;
         break;
       case POLLING_QPIGS:

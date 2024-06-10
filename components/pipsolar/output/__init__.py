@@ -36,6 +36,7 @@ CONF_BATTERY_FLOAT_VOLTAGE = "battery_float_voltage"
 CONF_BATTERY_TYPE = "battery_type"
 CONF_CURRENT_MAX_AC_CHARGING_CURRENT = "current_max_ac_charging_current"
 CONF_CURRENT_MAX_CHARGING_CURRENT = "current_max_charging_current"
+CONF_PV_GRID_TIE_CURRENT = "pv_grid_tie_current"
 CONF_OUTPUT_SOURCE_PRIORITY = "output_source_priority"
 CONF_CHARGER_SOURCE_PRIORITY = "charger_source_priority"
 CONF_BATTERY_DISCHARGE_VOLTAGE = "battery_discharge_voltage"
@@ -58,6 +59,7 @@ TYPES = {
     CONF_BATTERY_TYPE: ([0, 1, 2], "PBT%02.0f"),
     CONF_CURRENT_MAX_AC_CHARGING_CURRENT: ([2, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120], "MUCHGC%04.0f"),
     CONF_CURRENT_MAX_CHARGING_CURRENT: ([ 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120 ], "MCHGC%03.0f"),
+    CONF_PV_GRID_TIE_CURRENT: ([ 10, 12, 14, 16, 18, 20, 22 ], "PGTC%02.0f"),
     CONF_OUTPUT_SOURCE_PRIORITY: ([0, 1, 2, 3], "POP%02.0f"),
     CONF_CHARGER_SOURCE_PRIORITY: ([0, 1, 2], "PCP%02.0f"),
     CONF_BATTERY_DISCHARGE_VOLTAGE: (
