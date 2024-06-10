@@ -280,8 +280,8 @@ void Pipsolar::loop() {
         if (this->switch_on_) {
           this->switch_on_->publish_state(value_switch_on_);
         }
-        if (this->dustproof_installed_) {
-          this->dustproof_installed_->publish_state(value_dustproof_installed_);
+        if (this->reserved_) {
+          this->reserved_->publish_state(value_reserved_);
         }
         this->state_ = STATE_IDLE;
         break;
@@ -547,7 +547,7 @@ void Pipsolar::loop() {
             /* 21 */ &value_pv_charging_power_,                                                              // NOLINT
             /* 22 */ &value_charging_to_floating_mode_,                                                      // NOLINT
             /* 22 */ &value_switch_on_,                                                                      // NOLINT
-            /* 22 */ &value_dustproof_installed_);                                                           // NOLINT
+            /* 22 */ &value_reserved_);                                                                      // NOLINT
         if (this->last_qpigs_) {
           this->last_qpigs_->publish_state(tmp);
         }
