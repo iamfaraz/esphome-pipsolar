@@ -186,12 +186,8 @@ void Pipsolar::loop() {
         if (this->pv_power_balance_switch_) {
           this->pv_power_balance_switch_->publish_state(value_pv_power_balance_ == 1);
         }
-        if (this->pv_dual_output_) {
-          this->pv_dual_output_->publish_state(value_pv_dual_output_ == 1);
-        }
-        // special for power balance switch
-        if (this->pv_dual_output_switch_) {
-          this->pv_dual_output_switch_->publish_state(value_pv_dual_output_ == 1);
+        if (this->pv_grid_tie_current_) {
+          this->pv_grid_tie_current_->publish_state(value_pv_grid_tie_current_ == 1);
         }
         this->state_ = STATE_IDLE;
         break;
@@ -505,7 +501,7 @@ void Pipsolar::loop() {
                /* 25 */ &value_pv_ok_condition_for_parallel_,                                                // NOLINT
                /* 26 */ &value_pv_power_balance_,                                                            // NOLINT
                /* 27 */ &value_unknown_,                                                                     // NOLINT
-               /* 28 */ &value_pv_dual_output_,                                                              // NOLINT
+               /* 28 */ &value_pv_grid_tie_current_,                                                         // NOLINT
                /* 29 */ &value_dual_output_battery_cutoff_);                                                 // NOLINT
         if (this->last_qpiri_) {
           this->last_qpiri_->publish_state(tmp);

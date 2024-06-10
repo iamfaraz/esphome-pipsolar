@@ -50,7 +50,7 @@ CONF_OUTPUT_MODE = "output_mode"
 CONF_BATTERY_DISCHARGE_VOLTAGE = "battery_discharge_voltage"
 CONF_PV_OK_CONDITION_FOR_PARALLEL = "pv_ok_condition_for_parallel"
 CONF_PV_POWER_BALANCE = "pv_power_balance"
-CONF_PV_DUAL_OUTPUT = "pv_dual_output"
+CONF_PV_GRID_TIE_CURRENT = "pv_grid_tie_current"
 
 # QPIGS sensors
 
@@ -191,7 +191,7 @@ TYPES = {
     CONF_PV_POWER_BALANCE: sensor.sensor_schema(
         accuracy_decimals=1,
     ),
-    CONF_PV_DUAL_OUTPUT: sensor.sensor_schema(
+    CONF_PV_GRID_TIE_CURRENT: sensor.sensor_schema(
         accuracy_decimals=1,
     ),
     CONF_GRID_VOLTAGE: sensor.sensor_schema(
